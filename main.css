@@ -1,0 +1,56 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Cardo', serif;   
+    padding: 0px;
+}
+
+#home-screen {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 3rem
+}
+
+h1 {
+    color: rgb(42, 99, 99);
+    font-weight: normal
+}
+
+#home-search {
+    border: solid gray 1px;
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+    padding: 5px
+}
+
+#home-button {
+    border: solid gray 1px;
+    height: 30px;
+    border-radius: 5px
+}
+
+html { 
+    background: url("http://cdn.audubon.org/cdn/farfuture/bsc4kFhQ_Ka0_Oy7o3i38FsLf-Qo6rbVKfueDdHJgY4/mtime:1486682364/sites/default/files/styles/wysiwyg_slide/public/001_a1_2474_2_snowy-egret_peter_brannon_kk.jpg?itok=oUcnHvMy") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: black
+  }
+
+#list-screen {
+    display: flex;
+    /* justify-content: flex-end */
+}
+
+.map {
+    height: 30rem;
+    width: 70%;
+   }
+
+#list {
+    
+}

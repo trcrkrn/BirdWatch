@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BirdWatch</title>
+    <link href="https://fonts.googleapis.com/css?family=Cardo" rel="stylesheet">    
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <div id="home-screen">
+        <h1>BirdWatch</h1>
+        <form id="toolbar">
+            <input id="address" class="js-query" type="text" placeholder="My location">
+            <button id="home-search-button"type="submit">Search</button>
+            <!-- <div>Within
+                <input id="home-radius" type="text" placeholder="5">miles
+            </div> -->
+        </div>
+    </div>
+
+    <div id="list-screen" class="map">
+        <div id="list">
+        </div>
+        <div id="first-map" class="map">  
+        </div>
+    </div>
+
+    <div id="map-screen">
+        <div id="second-map"></div>
+<!-- //get users location search -->
+<!-- //get results from api
+//possibly need to iniitialize map here
+//loop through every result
+        //create an html representation to be displayed on page
+        //create a map marker of it
+        //expand boundaries of lat and long box to include coordinate
+//list of html elements to populate page
+//list of markers to populate map
+
+//final lat and long to zoom map to -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>    
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDlR8BkdD5kXkNPvTDAHUINNyytw6cuUE&callback=initMap"></script>
+    <script src="index.js"></script>
+</body>
+</html>
