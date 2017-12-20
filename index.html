@@ -11,40 +11,34 @@
   <body>
     <div id="home-screen">
         <h1>BirdWatch</h1>
-        <form id="toolbar">
-            <input id="address" class="js-query" type="text" placeholder="My location">
-            <button id="home-search-button"type="submit">Search</button>
-            <!-- <div>Within
-                <input id="home-radius" type="text" placeholder="5">miles
-            </div> -->
+        <form action+"#" class="js-search-form">
+            <label for="query"></label>
+            <input id="address" class="js-query" type="textbox" value="Los Angeles, CA" placeholder="Search...">
+            <button id="submit" type="submit" value="">Search</button>
+        </form>
+    </div>
+
+    <div id="list-screen">
+        <div id="list" class="js-search-results">
         </div>
     </div>
 
-    <div id="list-screen" class="map">
-        <div id="list">
-        </div>
-        <div id="first-map" class="map">  
-        </div>
+    <div id="bird-and-map">
+        <section id="bird-description">
+          <img src="">
+          <div>
+          </div>
+        </section>
+        <section id="map">
+        </section>
     </div>
-
-    <div id="map-screen">
-        <div id="second-map"></div>
-<!-- //get users location search -->
-<!-- //get results from api
-//possibly need to iniitialize map here
-//loop through every result
-        //create an html representation to be displayed on page
-        //create a map marker of it
-        //expand boundaries of lat and long box to include coordinate
-//list of html elements to populate page
-//list of markers to populate map
-
-//final lat and long to zoom map to -->
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>    
     <script async defer 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDlR8BkdD5kXkNPvTDAHUINNyytw6cuUE&callback=initMap"></script>
-    <script src="index.js"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDlR8BkdD5kXkNPvTDAHUINNyytw6cuUE&callback=initMap"></script>
+    <script src="index2.js"></script>
 </body>
 </html>
