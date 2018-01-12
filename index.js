@@ -82,7 +82,8 @@ function sortObservations(data) {
 }
 
 function renderSpecies(speciesName) {
-      return `<li ><img src="" alt=""><span class="species">${speciesName}</span></li>`;
+    if (speciesName == "null") return;
+    return `<li class="name-on-list"><img src="" alt=""><span class="species">${speciesName}</span></li>`;
 }
 
 // 5) create callback function to display the data from API
@@ -143,10 +144,42 @@ function showMarkers(speciesName) {
   console.log(mapcoordinates)
 }
 
-function noGenus(observation) {
-  if (!observation.identifications[0].taxon.ancestors[6]) return "N/A";
-  return observation.identifications[0].taxon.ancestors[6].name + " (" + observation.identifications[0].taxon.ancestors[6].preferred_common_name + ")";
+function nameOrder(observation) {
+  let order = observation.identifications[0].taxon.ancestors[4].name;
+  if (!observation.identifications[0].taxon.ancestors[4]) return "N/A";
+  if (!observation.identifications[0].taxon.ancestors[4].preferred_common_name) return order;
+  return order + " (" + observation.identifications[0].taxon.ancestors[4].preferred_common_name + ")";
 }
+
+function nameFamily(observation) {
+  let family = observation.identifications[0].taxon.ancestors[5].name;
+  if (!observation.identifications[0].taxon.ancestors[5]) return "N/A";
+  if (!observation.identifications[0].taxon.ancestors[5].preferred_common_name) return family;
+  return family + " (" + observation.identifications[0].taxon.ancestors[5].preferred_common_name + ")";
+}
+
+function nameGenus(observation) {
+  let genus = observation.identifications[0].taxon.ancestors[6].name;
+  if (!observation.identifications[0].taxon.ancestors[6]) return "N/A";
+  if (!observation.identifications[0].taxon.ancestors[6].preferred_common_name) return genus;
+  return genus + " (" + observation.identifications[0].taxon.ancestors[6].preferred_common_name + ")";
+}
+
+// function addComment(observation) {
+//   let comment;
+//   if (observation.comments.length === 0) return "N/A";
+//   for (i = 0; i < observation.comments.length; i++) {
+//     let comment = 
+//       `<li class="comment">
+//         <p class="comment-body">${observation.comments[i].body}<p>
+//         <img class="user-icon" src=${observation.comments[i].user.icon}>
+//         <p class="username">${observation.comments[i].user.login}</p>
+//         <p class="date">${observation.comments[i].created_at_details.date}</p>
+//       </li>`;
+//   $("#comments").html(comment);
+//   };
+//   console.log(observation.comments);
+// }
 
 function addDescription(observation) {
   let description = 
@@ -155,33 +188,16 @@ function addDescription(observation) {
       <section id="taxonomy">
         <ul id="species-name">${observation.species_guess}</ul>
           <li class="taxonomy-info" id="scientific-name"><u>Scientific name</u>: ${observation.taxon.name}</li>
-          <li class="taxonomy-info" id="order"><u>Order</u>: ${observation.identifications[0].taxon.ancestors[4].name} (${observation.identifications[0].taxon.ancestors[4].preferred_common_name})</li>
-          <li class="taxonomy-info" id="family"><u>Family</u>: ${observation.identifications[0].taxon.ancestors[5].name} (${observation.identifications[0].taxon.ancestors[5].preferred_common_name})</li>
-          <li class="taxonomy-info" id"genus"><u>Genus</u>: ${noGenus(observation)}</li>
+          <li class="taxonomy-info" id="order"><u>Order</u>: ${nameOrder(observation)}</li>
+          <li class="taxonomy-info" id="family"><u>Family</u>: ${nameFamily(observation)}</li>
+          <li class="taxonomy-info" id"genus"><u>Genus</u>: ${nameGenus(observation)}</li>
           <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
       </section>
-    </section>
-    <section id="comments-section">
-      <h2>User Comments</h1>
-      <ul id="comments">
-        ${addComment(observation)}
-      </ul>
+      <section id="description">
+      </section>
     </section>`;
  $("#description-container").html(description);
-}
-
-function addComment(observation) {
-  let comment;
-  for (i=0; i < observation.comments.length; i++) {
-  let comment = 
-    `<li class="comment">
-    <p class="comment-body">${observation.comments[i].body}<p>
-    <img class="user-icon" src=${observation.comments[i].user.icon}>
-    <p class="username">${observation.comments[i].user.login}</p>
-    <p class="date">${observation.comments[i].created_at_details.date}</p>
-  </li>`;
-  $("#comments").html(comment);
-  };
+  console.log(observation.identifications);
 }
 
 $(function() {
@@ -194,9 +210,32 @@ $(function() {
     species[speciesName].forEach(addDescription);
     google.maps.event.trigger(map, 'resize');
     showMarkers(speciesName);
+    getSpeciesDescriptionHTML(speciesName,renderSpeciesDescription);
   });
 });
 
 function goBack() {
-  window.history.back();
+  $("#bird-and-map").hide();
+  $("#list-screen").show();
 }
+
+// function findHTMLpage (speciesName) {
+//   let page = "http://"
+// }
+
+function renderSpeciesDescription (data) {
+  let $data = $(data);
+  let description = $data.find(".bird-node section section:nth-child(1) > div:last-of-type").text();
+  console.log(description);
+}
+
+function getSpeciesDescriptionHTML (speciesName, callback) {
+  speciesName = speciesName.replace(/\s+/g, '-')
+  .replace(/[',"]+/g, '').toLowerCase();
+  const url = "http://www.audubon.org/field-guide/bird/" + speciesName;
+  $.get(url, callback)
+}
+
+// #node-926 > section > div > div.large-8.columns > section:nth-child(1) > div.hide-for-tiny.hide-for-small.hide-for-medium
+
+// #node-649 > section > div > div.large-8.columns > section:nth-child(1) > div.hide-for-tiny.hide-for-small.hide-for-medium

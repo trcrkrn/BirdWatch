@@ -1,9 +1,11 @@
-* { box-sizing: border-box; }
+html { 
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Cardo', serif;   
     padding: 0px;
-    background: url("http://cdn.audubon.org/cdn/farfuture/bsc4kFhQ_Ka0_Oy7o3i38FsLf-Qo6rbVKfueDdHJgY4/mtime:1486682364/sites/default/files/styles/wysiwyg_slide/public/001_a1_2474_2_snowy-egret_peter_brannon_kk.jpg?itok=oUcnHvMy") no-repeat center center fixed; 
+    background: url("http://cdn.audubon.org/cdn/farfuture/RLIlWxqbInfEuN23V2H3hgR6R8M6O6BY47H_6m1ESE8/mtime:1497969000/sites/default/files/styles/hero_image/public/web_gbbc_sandhill_crane_3_bob-howdeshell_tn_2012_kk.jpg?itok=FfVIDhGx") no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -13,44 +15,60 @@ body {
 
 #home-screen {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    font-size: 3rem
+    font-size: 3rem;
+    padding-left: 10rem
+}
+
+form {
+    padding-left: 3rem
 }
 
 h1 {
-    color: rgb(42, 99, 99);
-    font-weight: normal
+    color: white;
+    font-weight: normal;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: gray;
 }
 
-#home-search {
+#address {
     border: solid gray 1px;
-    height: 30px;
-    width: 200px;
+    height: 25px;
+    width: 300px;
     border-radius: 5px;
-    padding: 5px
+    padding: 5px;
+    font-size: 15px
 }
 
-#home-button {
+#search-button {
     border: solid gray 1px;
-    height: 30px;
-    border-radius: 5px
+    height: 37px;
+    font-size: 15px;
+    border-radius: 5px;    
 }
 
 #list-screen {
     display: flex;
     justify-content: center;
+    font-size: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.name-on-list {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 3px;
+    border: solid gray 1px;
     background: white;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    opacity: 0.75;
-}
-
-ul {
-    list-style-type: none;
+    display: flex;
+    justify-content: center
 }
 
 #bird-and-map {
@@ -80,8 +98,8 @@ h2, h4 {
 #species-pic {
     width: 46%;
     height: 50%;
-    border-radius: 25px;
-    border: 2px solid rgb(42, 99, 99);
+    border-radius: 3px;
+    border: 2px solid gray;
 }
 
 #taxonomy {
@@ -89,8 +107,8 @@ h2, h4 {
     flex-direction: column;
     width: 46%;
     height: 100%;
-    border-radius: 25px;
-    border: 2px solid rgb(42, 99, 99);
+    border-radius: 3px;
+    border: 2px solid gray;
     background: rgb(247, 244, 244);
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -99,14 +117,10 @@ h2, h4 {
 }
 
 #species-name {
-    font-size: 17px;
-    /* color: white; */
-    margin: 4px;
+    font-size: 25px;
+    border-bottom: 2px solid gray;
     display: flex;
-    border-bottom: 2px solid rgb(42, 99, 99);
-    margin-left: 0px;
-    margin-right: 0px;
-    background: solid rgb(42, 99, 99)
+    margin-top: 4px;
 }
 
 li {
@@ -114,23 +128,30 @@ li {
 }
 
 .taxonomy-info {
-    font-size: 15px;
+    font-size: 20px;
     margin: 4px;
     display: center;
     align-self: flex-start
 }
 
+#scientific-name {
+    margin-top: 0px;
+}
+
 #back-to-list {
     margin: 4px;
     display: flex;
-    align-self: center
+    align-self: center;
+    height: 30px;
+    font-size: 18px;
+    font-family: 'Cardo', serif;       
 }
 
 #comments-section {
     width: 100%;
     height: 46%;
-    border-radius: 25px;
-    border: 2px solid rgb(42, 99, 99);
+    border-radius: 3px;
+    border: 2px solid gray;
     background: rgb(247, 244, 244);
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -144,6 +165,6 @@ li {
     height: 500px;
     width: 46%;
     margin: 2%;
-    border: 2px solid rgb(42, 99, 99);
-    border-radius: 25px
+    border: 2px solid gray;
+    border-radius: 3px
    }
