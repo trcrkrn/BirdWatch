@@ -2,6 +2,19 @@ html {
     box-sizing: border-box;
 }
 
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
 body {
     font-family: 'Cardo', serif;   
     padding: 0px;
@@ -17,15 +30,17 @@ body {
     display: flex;
     flex-direction: column;
     font-size: 3rem;
-    padding-left: 10rem
+    padding-left: 10%;
 }
 
 form {
-    padding-left: 3rem
+    padding-left: 3%;
+    width: 50%;    
 }
 
 h1 {
     color: white;
+    width: 50%;
     font-weight: normal;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: gray;
@@ -34,7 +49,7 @@ h1 {
 #address {
     border: solid gray 1px;
     height: 25px;
-    width: 300px;
+    width: 50%;
     border-radius: 5px;
     padding: 5px;
     font-size: 15px
@@ -53,12 +68,27 @@ h1 {
     font-size: 20px;
 }
 
+#list {
+    height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 50%;    
+}
+
+#map {
+    height: 500px;
+    width: 50%;    
+    margin: 2%;
+    border: 2px solid gray;
+    border-radius: 3px
+   }
+
 ul {
     list-style-type: none;
 }
 
 .name-on-list {
-    padding: 10px;
+    padding: 8px;
     margin: 5px;
     border-radius: 3px;
     border: solid gray 1px;
@@ -71,18 +101,12 @@ ul {
     justify-content: center
 }
 
-#bird-and-map {
-    display: flex;
-    flex-direction: row;
-}
-
 #description-container {
-    width: 46%;
     margin: 2%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between
-    
+    justify-content: space-between;
+    width: 50%;    
 }
 
 h2, h4 {
@@ -161,10 +185,36 @@ li {
     justify-content: center
 }
 
-#map {
-    height: 500px;
-    width: 46%;
-    margin: 2%;
-    border: 2px solid gray;
-    border-radius: 3px
-   }
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    #home-screen {
+        padding: 0%;
+        justify-content: center;
+    }
+
+    h1 {
+        width: 100%;
+        font-size: 4rem;
+    }
+    
+    form {
+        padding-left: 5%;
+    }
+
+    #address {
+        width: 75%;
+    }
+
+    #list-screen {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #list {
+        width: 100%;
+    }
+
+    #map {
+        width: 100%;
+    }
+}

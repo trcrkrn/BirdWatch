@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,20 +13,17 @@
         <h1>BirdWatch</h1>
         <form action="#" class="js-search-form">
             <label for="query"></label>
-            <input id="address" class="js-query" type="textbox" value="Los Angeles, CA" placeholder="Search...">
-            <button id="search-button" type="submit" value="">Search</button>
+            <input id="address" class="js-query" aria-labelledby="address" type="textbox" value="" placeholder="Search...">
+            <button id="search-button" type="submit" aria-labelledby="search-button" value="">Search</button>
         </form>
     </div>
 
     <div id="list-screen">
-        <ul id="list" class="js-search-results">
+        <ul id="list" class="js-search-results" hidden>
         </ul>
-    </div>
-
-    <div id="bird-and-map">
-        <section id="description-container">
+        <section id="description-container" hidden>
         </section>
-        <section id="map">
+        <section id="map" hidden>
         </section>
     </div>
     
