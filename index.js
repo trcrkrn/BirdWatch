@@ -13,23 +13,31 @@ function initMap() {
 
 // 2) create function to geocode address
 
-let coordinates
+let address;
 
-function geocodeAddress(callback) {
-  const queryTarget = $(".js-search-form .js-query");
-  let address = queryTarget.val();
+function geocodeAddress(callback, id) {
+  let coordinates;
+  let queryTarget;
+  if (id === "#js-search-form") {
+    queryTarget = $("#js-search-form #js-query")
+  } else if (id === "#new-js-search-form"){
+    queryTarget = $("#new-js-search-form #new-js-query")
+  };
+  address = queryTarget.val();
   geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {
       coordinates = results[0].geometry.location;
       map.setCenter(results[0].geometry.location);
+      coordinates = JSON.parse(JSON.stringify(results[0].geometry.location));
+      getDataFromApi(coordinates, callback);
+      queryTarget.val("")
     } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-    coordinates = JSON.parse(JSON.stringify(results[0].geometry.location));
-    getDataFromApi(coordinates, callback);
+      $("#error-message").html("Please enter a valid location!");
+      return;
+    };
   });
-  queryTarget.val("");
 }
+
 
 // 3) create function to get data from API
 
@@ -37,7 +45,7 @@ const observationSearchUrl = 'http://api.inaturalist.org/v1/observations/';
 
 function getDataFromApi(coordinates, callback) {
   const query= {
-      d1: "01%2F01%2F2016",
+      d1: "01%2F01%2F2015",
       iconic_taxa: 'Aves',
       lat: coordinates.lat,
       lng: coordinates.lng,
@@ -54,6 +62,7 @@ function getDataFromApi(coordinates, callback) {
 const species = {};
 
 function sortObservations(data) {
+  for (var member in species) delete species[member];
   data.forEach(function(observation){
     let key = observation.species_guess;
     if(key in species){
@@ -69,7 +78,9 @@ function renderSpecies(speciesName) {
     return `<li class="name-on-list"><span class="species">${speciesName}</span></li>`;
   }
 
-const markers = [];
+//create and store markers that will be filtered and shown on map
+
+let markers = [];
 
 function showMarkers(speciesName) {
   const speciesArray = species[speciesName];
@@ -84,34 +95,49 @@ function showMarkers(speciesName) {
       title: observation.species_guess,
     });
     markers.push(marker);
+    google.maps.event.trigger(map, 'resize')
   });    
 }
 
-//////////////////////////////
 // 5) create callback function to display the data from API
 
+function showResultsList() {
+  $("#error-message").html("");  
+  $("#home-screen").hide();
+  $("#search-results").show();
+  $("#new-search-form").show();
+  $("#list").show();
+  $("#description-container").hide();
+  $("#map").show();
+}
+
+
+//removes all keys of species
+
 function displayObservationData(data) {
+  markers.length = 0;
+  showResultsList();
   sortObservations(data.results);
   var names = Object.keys(species).map(renderSpecies);
   Object.keys(species).forEach(showMarkers);  
   filterMarkers();
-  $(".js-search-results").html(`<ul class="species">${names.join("")}</ul>`);
+  $("#results").html("Found " + names.length + " bird species near " + address + ". Click on a species for more info:");
+  $("#list").html(names.join(""));
 }
 
 // 6) create function that watches when we click the submit button
 
-function watchSubmit() {
-  $(".js-search-form").submit(event => {
+function watchSubmit(id) {
+  $(id).submit(event => {
+    console.log(id);
     event.preventDefault();
-    $("#home-screen").hide();
-    $("#list").show();
-    $("#description-container").hide();
-    $("#map").show();
-    geocodeAddress(displayObservationData);
-});
+    geocodeAddress(displayObservationData, id);    
+  });
 }
 
-$(watchSubmit);
+
+
+$(watchSubmit("#js-search-form"));
 
 //functions that access the taxonomy for each species
 
@@ -139,23 +165,28 @@ function nameGenus(observation) {
 function addDescription(observation) {
   let description = 
     `<section id="pd-container">
-      <img id="species-pic" src="${observation.taxon.default_photo.medium_url}">
-      <section id="taxonomy">
-        <ul id="species-name">${observation.species_guess}</ul>
-          <li class="taxonomy-info" id="scientific-name"><u>Scientific name</u>: ${observation.taxon.name}</li>
-          <li class="taxonomy-info" id="order"><u>Order</u>: ${nameOrder(observation)}</li>
-          <li class="taxonomy-info" id="family"><u>Family</u>: ${nameFamily(observation)}</li>
-          <li class="taxonomy-info" id"genus"><u>Genus</u>: ${nameGenus(observation)}</li>
-          <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
+      <img id="species-pic" alt="${observation.species_guess}" src="${observation.taxon.default_photo.medium_url}">
+      <section id="taxonomy" aria-live="assertive">
+        <dl>
+          <dt id="species-name">${observation.species_guess}</dt>
+          <dt>Scientific name</dt><dd>${observation.taxon.name}</dd>
+          <dt>Order</dt><dd>${nameOrder(observation)}</dd>
+          <dt>Family</dt><dd>${nameFamily(observation)}</dd>
+          <dt>Genus</dt><dd>${nameGenus(observation)}</dd>
+        </dl>
+        <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
       </section>
       <section id="description">
       </section>
     </section>`;
- $("#description-container").html(description);
+  $("#description-container").html(description);
 }
 
-$(function() {
+//handles click for species name
+
+$(function handleSpeciesClick() {
   $("ul").on("click", "li", function(event) {
+    $("#search-results").hide();
     $("#list").hide();
     $("#description-container").show();
     const speciesName = $(this).find(".species").text();
@@ -169,6 +200,7 @@ $(function() {
 function goBack() {
   filterMarkers();
   $("#description-container").hide();
+  $("#search-results").show();
   $("#list").show();
 }
 
@@ -196,6 +228,9 @@ function getSpeciesDescriptionHTML (speciesName, callback) {
 //handler for click on speciesname should call filtermarkers(speciesName)
 //showmarkers needs to set species name on marker
 
+//if species name is blank, show all markers; otherwise, show selected species amrker(s)
+//min and max find geobox containing all given coordinates that will be visible
+
 function filterMarkers(speciesName) {
   let minLat = 180.0, maxLat = -180.0, minLng = 180.0, maxLng = -180.0;
   for (i=0; i < markers.length; i++) {
@@ -213,6 +248,16 @@ function filterMarkers(speciesName) {
   }
   var mapcoordinates = {lat: minLat + (maxLat-minLat)/2, lng: minLng + (maxLng-minLng)/2};
   if (!speciesName) map.setCenter(mapcoordinates);
-  console.log(mapcoordinates);
-  google.maps.event.trigger(map, 'resize');  
 } 
+
+//reset results if doing new search
+
+function watchNewSubmit(id) {
+  $(id).submit(event => {
+    event.preventDefault();  
+    $("#list").html("");
+    watchSubmit(id);
+  });
+};
+
+$(watchNewSubmit("#new-js-search-form"));
