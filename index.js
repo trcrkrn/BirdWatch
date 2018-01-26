@@ -169,10 +169,10 @@ function addDescription(observation) {
           <dt>Family</dt><dd>${nameFamily(observation)}</dd>
           <dt>Genus</dt><dd>${nameGenus(observation)}</dd>
         </dl>
-        <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
-      </section>
-      <section id="description">
+        <p id="audubon">
         For more info: <a href="${audubonUrl}">${audubonUrl}</a>
+        </p>
+      <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
       </section>
     </section>`;
   $("#description-container").html(description);

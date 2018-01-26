@@ -209,6 +209,12 @@ dt {
     padding: 4px;    
 }
 
+#audubon {
+    font-size: 18px;
+    text-align: center;
+    padding: 4px
+}
+
 #species-name {
     font-size: 22px;
     padding-bottom: 10px;
