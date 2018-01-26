@@ -4,7 +4,7 @@ html {
 
 body {
     font-family: 'Cardo', serif;   
-    background: url("http://cdn.audubon.org/cdn/farfuture/RLIlWxqbInfEuN23V2H3hgR6R8M6O6BY47H_6m1ESE8/mtime:1497969000/sites/default/files/styles/hero_image/public/web_gbbc_sandhill_crane_3_bob-howdeshell_tn_2012_kk.jpg?itok=FfVIDhGx") no-repeat center center fixed; 
+    background: url("https://cdn.audubon.org/cdn/farfuture/RLIlWxqbInfEuN23V2H3hgR6R8M6O6BY47H_6m1ESE8/mtime:1497969000/sites/default/files/styles/hero_image/public/web_gbbc_sandhill_crane_3_bob-howdeshell_tn_2012_kk.jpg?itok=FfVIDhGx") no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -56,7 +56,7 @@ h1 {
     -webkit-text-stroke-color: gray;
 }
 
-#js-query, #new-js-query {
+input[role="searchbox"] {
     border: solid gray 1px;
     height: 25px;
     width: 80%;

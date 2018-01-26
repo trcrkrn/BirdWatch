@@ -15,14 +15,9 @@ function initMap() {
 
 let address;
 
-function geocodeAddress(callback, id) {
+function geocodeAddress(callback, form) {
   let coordinates;
-  let queryTarget;
-  if (id === "#js-search-form") {
-    queryTarget = $("#js-search-form #js-query")
-  } else if (id === "#new-js-search-form"){
-    queryTarget = $("#new-js-search-form #new-js-query")
-  };
+  let queryTarget = $(form).find(".js-query");
   address = queryTarget.val();
   geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {
@@ -41,7 +36,7 @@ function geocodeAddress(callback, id) {
 
 // 3) create function to get data from API
 
-const observationSearchUrl = 'http://api.inaturalist.org/v1/observations/';
+const observationSearchUrl = 'https://api.inaturalist.org/v1/observations/';
 
 function getDataFromApi(coordinates, callback) {
   const query= {
@@ -127,17 +122,15 @@ function displayObservationData(data) {
 
 // 6) create function that watches when we click the submit button
 
-function watchSubmit(id) {
-  $(id).submit(event => {
-    console.log(id);
+function watchSubmit() {
+  $("form").submit(event => {
     event.preventDefault();
-    geocodeAddress(displayObservationData, id);    
+    $("#list").html("");
+    geocodeAddress(displayObservationData, event.currentTarget);    
   });
 }
 
-
-
-$(watchSubmit("#js-search-form"));
+$(watchSubmit);
 
 //functions that access the taxonomy for each species
 
@@ -163,6 +156,8 @@ function nameGenus(observation) {
 }
 
 function addDescription(observation) {
+  let speciesNameUrl = observation.species_guess.replace(/\s+/g, '-').replace(/[',"]+/g, '').toLowerCase();
+  const audubonUrl = "http://www.audubon.org/field-guide/bird/" + speciesNameUrl;
   let description = 
     `<section id="pd-container">
       <img id="species-pic" alt="${observation.species_guess}" src="${observation.taxon.default_photo.medium_url}">
@@ -177,6 +172,7 @@ function addDescription(observation) {
         <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
       </section>
       <section id="description">
+        For more info: <a href="${audubonUrl}">${audubonUrl}</a>
       </section>
     </section>`;
   $("#description-container").html(description);
@@ -193,7 +189,7 @@ $(function handleSpeciesClick() {
     species[speciesName].forEach(addDescription);
     filterMarkers(speciesName);
     google.maps.event.trigger(map, 'resize');
-    getSpeciesDescriptionHTML(speciesName,renderSpeciesDescription);
+    // getSpeciesDescriptionHTML(speciesName,renderSpeciesDescription);
   });
 });
 
@@ -204,18 +200,23 @@ function goBack() {
   $("#list").show();
 }
 
-function renderSpeciesDescription (data) {
-  let $data = $(data);
-  let description = $data.find(".bird-node section section:nth-child(1) > div:last-of-type").text();
-  console.log(description);
-}
 
-function getSpeciesDescriptionHTML (speciesName, callback) {
-  let speciesNameUrl = speciesName.replace(/\s+/g, '-').replace(/[',"]+/g, '').toLowerCase();
-  const audubonUrl = "http://www.audubon.org/field-guide/bird/" + speciesNameUrl;
-  var url = "http://anyorigin.com/go?url=" + encodeURIComponent(audubonUrl) + "&callback=?";
-  $.get(url, callback);
-}
+
+
+
+//functions to get ddescription of individual species using scrapers
+
+// function renderSpeciesDescription (data) {
+//   let $data = $(data);
+//   let description = $data.find(".bird-node section section:nth-child(1) > div:last-of-type").text();
+//   console.log(description);
+// }
+
+// function getSpeciesDescriptionHTML (speciesName, callback) {
+//   const audubonUrl = "http://www.audubon.org/field-guide/bird/" + speciesNameUrl;
+//   var url = "http://anyorigin.com/go?url=" + encodeURIComponent(audubonUrl) + "&callback=?";
+//   $.get(url, callback);
+// }
 
 //show markers function only gets called once at the same time list of species
 //gets built and remove species specific code from showmarkers so it always shows 
@@ -251,13 +252,3 @@ function filterMarkers(speciesName) {
 } 
 
 //reset results if doing new search
-
-function watchNewSubmit(id) {
-  $(id).submit(event => {
-    event.preventDefault();  
-    $("#list").html("");
-    watchSubmit(id);
-  });
-};
-
-$(watchNewSubmit("#new-js-search-form"));
