@@ -135,22 +135,22 @@ $(watchSubmit);
 //functions that access the taxonomy for each species
 
 function nameOrder(observation) {
-  let order = observation.identifications[0].taxon.ancestors[4].name;
   if (!observation.identifications[0].taxon.ancestors[4]) return "N/A";
+    let order = observation.identifications[0].taxon.ancestors[4].name;
   if (!observation.identifications[0].taxon.ancestors[4].preferred_common_name) return order;
   return order + " (" + observation.identifications[0].taxon.ancestors[4].preferred_common_name + ")";
 }
 
 function nameFamily(observation) {
-  let family = observation.identifications[0].taxon.ancestors[5].name;
   if (!observation.identifications[0].taxon.ancestors[5]) return "N/A";
+  let family = observation.identifications[0].taxon.ancestors[5].name;
   if (!observation.identifications[0].taxon.ancestors[5].preferred_common_name) return family;
   return family + " (" + observation.identifications[0].taxon.ancestors[5].preferred_common_name + ")";
 }
 
 function nameGenus(observation) {
-  let genus = observation.identifications[0].taxon.ancestors[6].name;
   if (!observation.identifications[0].taxon.ancestors[6]) return "N/A";
+  let genus = observation.identifications[0].taxon.ancestors[6].name;
   if (!observation.identifications[0].taxon.ancestors[6].preferred_common_name) return genus;
   return genus + " (" + observation.identifications[0].taxon.ancestors[6].preferred_common_name + ")";
 }
