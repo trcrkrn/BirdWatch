@@ -170,7 +170,7 @@ function addDescription(observation) {
           <dt>Genus</dt><dd>${nameGenus(observation)}</dd>
         </dl>
         <p id="audubon">
-        For more info: <a href="${audubonUrl}">${audubonUrl}</a>
+        For more info: <a href="${audubonUrl}">audubon</a>
         </p>
       <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
       </section>
@@ -178,7 +178,7 @@ function addDescription(observation) {
   $("#description-container").html(description);
 }
 
-//handles click for species name
+//handles click event for species name
 
 $(function handleSpeciesClick() {
   $("ul").on("click", "li", function(event) {
