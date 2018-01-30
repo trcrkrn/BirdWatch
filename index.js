@@ -170,7 +170,7 @@ function addDescription(observation) {
           <dt>Genus</dt><dd>${nameGenus(observation)}</dd>
         </dl>
         <p id="audubon">
-        For more info: <a href="${audubonUrl}">${audubonUrl}</a>
+        <a href="${audubonUrl}">Click here</a> for more info
         </p>
       <button id="back-to-list" type="button" onclick="goBack()">Back to List</button>
       </section>
