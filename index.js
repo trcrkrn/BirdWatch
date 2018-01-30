@@ -178,7 +178,7 @@ function addDescription(observation) {
   $("#description-container").html(description);
 }
 
-//handles click for species name
+//handles click event for species name
 
 $(function handleSpeciesClick() {
   $("ul").on("click", "li", function(event) {
