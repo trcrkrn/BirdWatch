@@ -212,7 +212,6 @@ dt {
 #audubon {
     font-size: 18px;
     text-align: center;
-    padding: 4px
 }
 
 #species-name {
@@ -249,7 +248,8 @@ li {
     align-self: center;
     height: 30px;
     font-size: 18px;
-    font-family: 'Cardo', serif;       
+    font-family: 'Cardo', serif;  
+    margin-bottom: 18px
 }
 
 #comments-section {
@@ -264,6 +264,20 @@ li {
     background-size: cover;
     display: flex;
     justify-content: center
+}
+
+a:link {
+    color: black;
+    text-decoration: none;
+    font-weight: bold
+}
+
+a:visited {
+    color: black
+}
+
+a:hover {
+    color: darkgray
 }
 
 @media only screen and (max-width: 768px) {
